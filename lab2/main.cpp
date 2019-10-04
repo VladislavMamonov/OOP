@@ -50,6 +50,54 @@ int task1()
 	return 0;
 }
 
+int task2()
+{
+	Stack stk;
+	Queue turn;
+
+	cout << "press '1' to add element in stack" << endl;
+	cout << "press '2' to remove element from stack" << endl;
+	cout << "press '3' to get stack info" << endl;
+	cout << "press '4' to delete stack" << endl;
+
+	for (int i = 0; stk.stack_size() != 10; i++) {
+		cout << endl;
+		cout << "selection: ";
+		int choice;
+		cin >> choice;
+
+		if (choice == 1) {
+			cout << "value: ";
+			int user_data;
+			cin >> user_data;
+			stk.stack_push(user_data);
+		}
+
+		if (choice == 2) {
+			if (stk.stack_size() == 0) {
+				cout << "the stack is empty" << endl;
+				continue;
+			}
+			cout << "delete method" << endl;
+			stk.stack_pop();
+		}
+
+		if (choice == 3) {
+			if (stk.stack_size() == 0) {
+				cout << "the stack is empty" << endl;
+			}
+			for (int i = 0; i < stk.stack_size(); i++) {
+				cout << stk[i] << endl;
+			}
+		}
+
+		if (choice == 4) {
+			stk.~Stack();
+		}
+	}
+	return 0;
+}
+
 
 int main()
 {
@@ -63,7 +111,7 @@ int main()
 	lst.push_back(45);
 	lst.push_front(1);
 
-	cout <<"Found element: "<< lst[1] << endl;
+	cout << "Found element: "<< lst[1] << endl;
 
 	for (int i = 0; i < lst.GetSize(); i++)
 	{
@@ -99,19 +147,20 @@ int main()
 	}
 
 	cout << endl;
-	cout << "print '1' for task" << endl;
+	cout << "print '1' for task 1, '2' for task 2" << endl;
 	int choice = 0;
 
 	cin >> choice;
 
 	if (choice == 1)
 	{
-		lst.clear();
 		system("clear");
 		task1();
 	}
-	else
+	if (choice == 2)
 	{
-		return 0;
+		system("clear");
+		task2();
 	}
+	return 0;
 }

@@ -92,8 +92,54 @@ int task2()
 		}
 
 		if (choice == 4) {
+			cout << "clear stack" << endl;
 			stk.~Stack();
 		}
+	}
+
+
+		system("clear");
+		cout << "press '1' to add element in queue" << endl;
+		cout << "press '2' to remove element from queue" << endl;
+		cout << "press '3' to get queue info" << endl;
+		cout << "press '4' to delete queue" << endl;
+
+		for (int i = 0; turn.queue_size() != 10; i++) {
+			cout << endl;
+			cout << "selection: ";
+			int choice;
+			cin >> choice;
+
+			if (choice == 1) {
+				cout << "value: ";
+				int user_data;
+				cin >> user_data;
+				turn.queue_push(user_data);
+			}
+
+			if (choice == 2) {
+				if (turn.queue_size() == 0) {
+					cout << "the queue is empty" << endl;
+					continue;
+				}
+				cout << "delete method" << endl;
+				turn.queue_pop();
+			}
+
+			if (choice == 3) {
+				if (turn.queue_size() == 0) {
+					cout << "the queue is empty" << endl;
+				}
+				for (int i = 0; i < turn.queue_size(); i++) {
+					cout << turn[i] << endl;
+				}
+			}
+
+			if (choice == 4) {
+				cout << "clear queue" << endl;
+				turn.~Queue();
+			}
+
 	}
 	return 0;
 }

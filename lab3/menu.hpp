@@ -11,6 +11,7 @@ public:
 
   void file_input();
   void file_output();
+  void file_search();
 
 private:
   void file_read();

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-ofstream *file = new ofstream();
+fstream *file = new fstream();
 
 void menu::file_read()
 {
@@ -35,9 +35,35 @@ void menu::file_output()
 
   while (!file->eof()) {
     string str;
-    getline(file, str);
+    getline(*file, str);
     cout << str << endl;
   }
+}
+
+void menu::file_search()
+{
+  file->seekp(0, ios_base::beg);
+
+  string str_user;
+  cout << "Enter the search word: ";
+  cin >> str_user;
+  cout << endl;
+
+  int count = 0;    //кол-во совпадений
+  int position = 0;      //номер строки
+
+  while (!file->eof()) {
+    string lookup;
+
+    getline(*file, lookup);
+    position++;
+
+    if (lookup == str_user) {
+      count++;
+    }
+  }
+  cout << "matches found: " << count << endl;
+  cout << "position: " << position << endl;
 }
 
 menu::menu()

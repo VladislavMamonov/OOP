@@ -3,13 +3,8 @@
 int main()
 {
   menu first;
-  first.file_input();
-  first.file_input();
-  first.file_input();
-  first.file_input();
 
-  first.file_output();
-  first.file_search();
+  first.interface();
 
   return 0;
 }

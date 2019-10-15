@@ -101,8 +101,11 @@ void terminal::delete_word()
   terminal_data->clear();
   terminal_data->seekp(0, ios_base::beg);
 
+  fstream temp;
+  temp.open("delete_buf.txt");
+
   string str_user;
-  cout << "Enter the search word: ";
+  cout << "Enter the deleting word: ";
   cin >> str_user;
   cout << endl;
 
@@ -113,12 +116,53 @@ void terminal::delete_word()
 
     getline(*terminal_data, lookup);
 
-    if (lookup == str_user) {
-      *terminal_data << ' ' << endl;
-      count++;
+    int i = 0;
+
+    for (i = lookup.find(str_user, i++); i != string::npos;
+     i = lookup.find(str_user, i + 1)) {
+       lookup.erase(i, str_user.length());
+       count++;
     }
+    temp << lookup << endl;
   }
+  clear();
+
+  temp.seekp(0, ios_base::beg);
+
+  while(!temp.eof()) {
+    string str;
+    getline(temp, str);
+
+    *terminal_data << str << endl;
+  }
+
   cout << "delete words: " << count << endl;
+  temp.close();
+  temp.open("delete_buf.txt", ios::out);      //удаление данных в буфере
+  temp.close();
+}
+
+void terminal::clear()
+{
+  terminal_data->close();
+  terminal_data->open("terminal_data.txt", ios::out);
+  terminal_data->close();
+
+  terminal_data->open("terminal_data.txt");
+}
+
+void terminal::save()
+{
+  file->clear();
+  terminal_data->clear();
+  terminal_data->seekp(0, ios_base::beg);
+
+  while (!terminal_data->eof()) {
+    string str;
+
+    getline(*terminal_data, str);
+    *file << str << endl;
+  }
 }
 
 void menu::interface()
@@ -132,6 +176,9 @@ void menu::interface()
     cout << "Press '2' to show text stored terminal" << endl;
     cout << "Press '3' to find word" << endl;
     cout << "Press '4' to delete word from terminal" << endl;
+    cout << "Press '5' to clear terminal" << endl;
+    cout << "Press '6' to save changes in file" << endl;
+    cout << "Press '7' to exit" << endl;
 
     cout << endl;
     cout << "selection: ";
@@ -152,6 +199,18 @@ void menu::interface()
 
     if (choice == 4) {
       Word_Delete();
+    }
+
+    if (choice == 5) {
+      Terminal_Clear();
+    }
+
+    if (choice == 6) {
+      File_Save();
+    }
+
+    if (choice == 7) {
+      break;
     }
   }
 }

@@ -16,6 +16,8 @@ protected:
   void output();
   void search();
   void delete_word();
+  void clear();
+  void save();
 
 private:
   void file_read();
@@ -45,6 +47,14 @@ private:
 
   void Word_Delete() {
     delete_word();
+  }
+
+  void Terminal_Clear() {
+    clear();
+  }
+
+  void File_Save() {
+    save();
   }
 };
 

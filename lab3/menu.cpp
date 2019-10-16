@@ -16,7 +16,13 @@ void terminal::file_read()
   cout << "Enter file name: ";
   getline(cin, name);
 
+  file->open(name, ios_base::out);
+  file->close();
   file->open(name);
+
+
+  terminal_data->open("terminal_data.txt", ios_base::out);
+  terminal_data->close();
   terminal_data->open("terminal_data.txt");
 
   while (!file->eof()) {
@@ -82,7 +88,7 @@ void terminal::search()
     getline(*terminal_data, lookup);
     strNumber++;
 
-    int i = 0;
+    long unsigned int i = 0;
 
     for (i = lookup.find(str_user, i++); i != string::npos;
      i = lookup.find(str_user, i + 1)) {
@@ -116,7 +122,7 @@ void terminal::delete_word()
 
     getline(*terminal_data, lookup);
 
-    int i = 0;
+    long unsigned int i = 0;
 
     for (i = lookup.find(str_user, i++); i != string::npos;
      i = lookup.find(str_user, i + 1)) {

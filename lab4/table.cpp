@@ -35,6 +35,17 @@ void table::load_file()
     cout << "Enter file name: ";
     cin >> name;
 
+    file = new fstream();
+    file->open(name);
+
+    if (file->fail()) {
+      cout << endl;
+      cout << "unknown file" << endl;
+      cout << endl;
+      i--;
+      continue;
+    }
+
     if (name_error_check(name) == 1) {
       cout << endl;
       cout << "file must be in .txt format" << endl;
@@ -75,9 +86,12 @@ void table::read_file()
       matrix[i] = new string[cols];
     }
 
+
     int rows_count = 0, cols_count = 0;
 
     while (!file->eof()) {
+      cols = cols_count;
+      cols_count = 0;
       string str;
 
       read_buf = new fstream();
@@ -95,11 +109,11 @@ void table::read_file()
         matrix[rows_count][cols_count] = str;
         cols_count++;
       }
-      cols_count = 0;
       rows_count++;
       read_buf->close();
     }
 
+    rows = rows_count;
     table_output(rows, cols);
     file->close();
 

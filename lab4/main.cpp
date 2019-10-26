@@ -3,7 +3,7 @@
 int main()
 {
   table obj;
-  obj.read_file();
+  obj.interface();
 
   return 0;
 }

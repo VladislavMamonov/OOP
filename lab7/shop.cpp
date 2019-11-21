@@ -1,7 +1,75 @@
 #include "shop.hpp"
+#include <fstream>
 #include <iostream>
 
 using namespace std;
+
+
+int Shop_Storage::file_read()
+{
+  storage_data1 = new fstream();
+  storage_data2 = new fstream();
+
+  storage_data1->open("storage_data1.txt");
+  storage_data2->open("storage_data2.txt");
+
+  if (storage_data1->fail() || storage_data2->fail()) {
+    storage_data1->open("storage_data1.txt", ios_base::out);
+    storage_data2->open("storage_data2.txt", ios_base::out);
+    storage_data1->close();
+    storage_data2->close();
+    storage_data1->open("storage_data1.txt");
+    storage_data2->open("storage_data2.txt");
+    return 1;
+  }
+  return 0;
+}
+
+
+void Shop_Storage::load_data()
+{
+  storage_data1->clear();
+  storage_data1->seekp(0, ios_base::beg);
+  storage_data2->clear();
+  storage_data2->seekp(0, ios_base::beg);
+
+  while (!storage_data1->eof()) {
+    string str_data1;
+    string str_data2;
+    getline(*storage_data1, str_data1);
+    getline(*storage_data2, str_data2);
+
+    shop_list.push(str_data1, atoi(str_data2.c_str()), shop_list.GetSize());
+  }
+  shop_list.pop(shop_list.GetSize() - 1);  //Удаляем последний элемент, т.к он пустой
+}
+
+
+void Shop_Storage::save_data()
+{
+  storage_data1->close();
+  storage_data1->open("storage_data1.txt", ios::out);
+  storage_data1->close();
+  storage_data1->open("storage_data1.txt");
+
+  storage_data2->close();
+  storage_data2->open("storage_data2.txt", ios::out);
+  storage_data2->close();
+  storage_data2->open("storage_data2.txt");
+
+  storage_data1->clear();
+  storage_data1->seekp(0, ios_base::beg);
+  storage_data2->clear();
+  storage_data2->seekp(0, ios_base::beg);
+
+  for (int i = 0; i < shop_list.GetSize(); i++) {
+    *storage_data1 << shop_list[i] << endl;
+  }
+
+  for (int i = 0; i < shop_list.GetSize(); i++) {
+    *storage_data2 << shop_list.GetData2(i) << endl;
+  }
+}
 
 
 int seller::cost_error_check(int cost)
@@ -33,6 +101,9 @@ void seller::add_product()
 
   shop_list.push(product_name, cost, shop_list.GetSize());
   cout << endl;
+
+  save_data();
+  system("clear");
 }
 
 
@@ -43,13 +114,14 @@ void seller::remove_product()
   cin >> product_name;
   cout << endl;
 
-  if (shop_list.search(product_name) != 1) {
+  if (shop_list.search(product_name) != -1) {
     shop_list.pop(shop_list.search(product_name));
   }
   else {
     cout << "Ошибка удаления" << endl;
     cout << endl;
   }
+  save_data();
 }
 
 
@@ -107,6 +179,7 @@ void client::catalog()
     quantity++;
     cout << endl;
   }
+  save_data();
 }
 
 
@@ -165,6 +238,7 @@ void client::basket()
     client_basket.pop(search_index);
     shop_list.push(product_select, client_basket.GetCost(), shop_list.GetSize());
   }
+  save_data();
 }
 
 
@@ -173,6 +247,7 @@ void client::orders()
   for (int i = 0; i < client_orders.GetSize(); i++) {
     cout << client_orders[i] << endl << endl;
   }
+  save_data();
 }
 
 
@@ -221,7 +296,6 @@ void Shop::seller_interface()
 
   if (select == 2) {
     add_product();
-    system("clear");
     seller_interface();
   }
 
@@ -275,13 +349,11 @@ void Shop::client_interface()
   if (select == 1) {
     product_list();
     catalog();
-    system("clear");
     client_interface();
   }
 
   if (select == 2) {
     basket();
-    system("clear");
     client_interface();
   }
 

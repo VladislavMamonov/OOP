@@ -126,6 +126,24 @@ public:
         return current->data1;
     }
 
+    int GetData2(const int index)
+    {
+      int counter = 0;
+
+      DoubleNode<T>* current = this->Head;
+
+      while (current->pNext != nullptr) {
+          if (counter == index) {
+              this->cost = current->data2;
+              return current->data2;
+          }
+          current = current->pNext;
+          counter++;
+      }
+      this->cost = current->data2;
+      return current->data2;
+    }
+
     int search(T data1)
     {
         int index = 0;

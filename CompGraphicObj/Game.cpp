@@ -1,5 +1,6 @@
 #include "MotionCompGraphicObj.hpp"
 #include <iostream>
+#include <unistd.h>
 
 using namespace std;
 
@@ -38,6 +39,16 @@ void GameInit::load_objects()
 
   gameBg = new Sprite(*gameBackground);
   character_sprite = new Sprite(*character_texture);
+
+  clock = new Clock;
+}
+
+
+void GameInit::game_draw()
+{
+  GameWindow->draw(*gameBg);
+  GameWindow->draw(*character_sprite);
+  GameWindow->display();
 }
 
 
@@ -45,7 +56,6 @@ void GameInit::game_proccess()
 {
   GameInit::load_objects();
 
-  character_sprite->setTextureRect(IntRect(55, 56, 36, 55));
   character_sprite->setPosition(GameWindow->getSize().x/2.25, GameWindow->getSize().y/2.7);
 
   while (!Keyboard::isKeyPressed(Keyboard::Escape))
@@ -58,26 +68,28 @@ void GameInit::game_proccess()
       }
     }
 
-    if (Keyboard::isKeyPressed(Keyboard::Left)) {
-      character_sprite->move(-0.3, 0);
+    *CurrentFrame = 0;
+
+    character_sprite->setTextureRect(IntRect(155, 165, 115, 160));
+
+    if (Keyboard::isKeyPressed(Keyboard::Left) || Keyboard::isKeyPressed(Keyboard::A)) {
+      character_sprite->move(-0.2, 0);
     }
 
-    if (Keyboard::isKeyPressed(Keyboard::Right)) {
-       character_sprite->move(0.3, 0);
-     }
+    while (Keyboard::isKeyPressed(Keyboard::Right) || Keyboard::isKeyPressed(Keyboard::D)) {
+      hero_right_animation();
+      game_draw();
+    }
 
-    if (Keyboard::isKeyPressed(Keyboard::Up)) {
-       character_sprite->move(0, -0.3);
-     }
+    while (Keyboard::isKeyPressed(Keyboard::Up) || Keyboard::isKeyPressed(Keyboard::W)) {
+      hero_up_animation();
+      game_draw();
+    }
 
-    if (Keyboard::isKeyPressed(Keyboard::Down)) {
-       character_sprite->move(0, 0.3);
-     }
-
-    GameWindow->draw(*gameBg);
-    GameWindow->draw(*character_sprite);
-    GameWindow->display();
+    if (Keyboard::isKeyPressed(Keyboard::Down) || Keyboard::isKeyPressed(Keyboard::S)) {
+      character_sprite->move(0, 0.2);
+    }
+    game_draw();
   }
-
   GameWindow->close();
 }

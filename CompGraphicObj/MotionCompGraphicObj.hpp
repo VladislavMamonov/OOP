@@ -32,10 +32,20 @@ protected:
 	Texture *character_texture;
 	Sprite *character_sprite;
 	Sprite *gameBg;
+	Clock *clock;
+	int *CurrentFrame = new int;
 };
 
 
-class GameInit : public GUI_Objects
+class Animations : public GUI_Objects
+{
+protected:
+	void hero_right_animation();
+	void hero_up_animation();
+};
+
+
+class GameInit : public Animations
 {
 protected:
   void load_game(int *ResolutionOption);
@@ -43,6 +53,7 @@ protected:
 private:
 		void game_proccess();
 		void load_objects() override;
+		void game_draw();
 };
 
 

@@ -39,8 +39,28 @@ void GameInit::load_objects()
 
   gameBg = new Sprite(*gameBackground);
   character_sprite = new Sprite(*character_texture);
+}
 
-  clock = new Clock;
+
+void GameInit::map_border_check()
+{
+  int PlayerCoordX = character_sprite->getPosition().x;
+  int PlayerCoordY = character_sprite->getPosition().y;
+
+  int WindowSizeX = GameWindow->getSize().x;
+  int WindowSizeY = GameWindow->getSize().y;
+
+  if (PlayerCoordX < 0)
+    character_sprite->setPosition(WindowSizeX, PlayerCoordY);  //Граница слева
+
+  if (PlayerCoordX > WindowSizeX)
+    character_sprite->setPosition(0, PlayerCoordY);  //Граница справа
+
+  if (PlayerCoordY < 0)
+    character_sprite->setPosition(PlayerCoordX, WindowSizeY);  //Граница сверху
+
+  if (PlayerCoordY > WindowSizeY)
+    character_sprite->setPosition(PlayerCoordX, 0);  //Граница снизу
 }
 
 
@@ -69,25 +89,30 @@ void GameInit::game_proccess()
     }
 
     *CurrentFrame = 0;
+    character_sprite->setTextureRect(IntRect(157, 165, 115, 160));
 
-    character_sprite->setTextureRect(IntRect(155, 165, 115, 160));
-
-    if (Keyboard::isKeyPressed(Keyboard::Left) || Keyboard::isKeyPressed(Keyboard::A)) {
-      character_sprite->move(-0.2, 0);
+    while (Keyboard::isKeyPressed(Keyboard::Left) || Keyboard::isKeyPressed(Keyboard::A)) {
+      hero_left_animation();
+      map_border_check();
+      game_draw();
     }
 
     while (Keyboard::isKeyPressed(Keyboard::Right) || Keyboard::isKeyPressed(Keyboard::D)) {
       hero_right_animation();
+      map_border_check();
       game_draw();
     }
 
     while (Keyboard::isKeyPressed(Keyboard::Up) || Keyboard::isKeyPressed(Keyboard::W)) {
       hero_up_animation();
+      map_border_check();
       game_draw();
     }
 
-    if (Keyboard::isKeyPressed(Keyboard::Down) || Keyboard::isKeyPressed(Keyboard::S)) {
-      character_sprite->move(0, 0.2);
+    while (Keyboard::isKeyPressed(Keyboard::Down) || Keyboard::isKeyPressed(Keyboard::S)) {
+      hero_down_animation();
+      map_border_check();
+      game_draw();
     }
     game_draw();
   }

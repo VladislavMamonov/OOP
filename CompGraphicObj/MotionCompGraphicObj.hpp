@@ -40,8 +40,10 @@ protected:
 class Animations : public GUI_Objects
 {
 protected:
+	void hero_left_animation();
 	void hero_right_animation();
 	void hero_up_animation();
+	void hero_down_animation();
 };
 
 
@@ -53,6 +55,7 @@ protected:
 private:
 		void game_proccess();
 		void load_objects() override;
+		void map_border_check();
 		void game_draw();
 };
 
@@ -66,7 +69,6 @@ private:
     void settings();
 		void load_objects() override;
 };
-
 
 
 class GUI : public Menu

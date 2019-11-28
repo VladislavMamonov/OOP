@@ -1,10 +1,9 @@
 #include "MotionCompGraphicObj.hpp"
 #include <iostream>
-#include <unistd.h>
 
 using namespace std;
 
-void GameInit::load_game(int *ResolutionOption)
+void GameInit::load_game()
 {
   if (*ResolutionOption == 1) {
     GameWindow->create(VideoMode(1920, 1080),
@@ -90,6 +89,7 @@ void GameInit::game_proccess()
 
     *CurrentFrame = 0;
     character_sprite->setTextureRect(IntRect(157, 165, 115, 160));
+
 
     while (Keyboard::isKeyPressed(Keyboard::Left) || Keyboard::isKeyPressed(Keyboard::A)) {
       hero_left_animation();

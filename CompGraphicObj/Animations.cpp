@@ -1,49 +1,70 @@
 #include "MotionCompGraphicObj.hpp"
+#include <iostream>
+
+using namespace std;
+
+
+void Animations::frame_update()
+{
+  if (*ResolutionOption == 1)
+    *CurrentFrame += 1;
+
+  if (*ResolutionOption == 2)
+    *CurrentFrame += 1;
+
+  if (*ResolutionOption == 3)
+    *CurrentFrame += 0.5;
+
+  if (*ResolutionOption < 1 || *ResolutionOption > 3)
+    *CurrentFrame += 1;
+}
 
 
 void Animations::hero_left_animation()
 {
-  *CurrentFrame += 1;
+  frame_update();
+
+  cout << *CurrentFrame << endl;
 
   if (*CurrentFrame > 384)
-    *CurrentFrame -= 385;
+    *CurrentFrame -= 384;
 
   if (*CurrentFrame == 128)
-    character_sprite->setTextureRect(IntRect(128 + 115, 3, -115, 160));
+    character_sprite->setTextureRect(IntRect(128 + 115, 0, -115, 160));
 
   if (*CurrentFrame == 256)
-    character_sprite->setTextureRect(IntRect(300+115, 3, -115, 160));
+    character_sprite->setTextureRect(IntRect(275+115, 0, -115, 160));
 
   if (*CurrentFrame == 384)
-    character_sprite->setTextureRect(IntRect(10+115, 3, -115, 160));
+    character_sprite->setTextureRect(IntRect(10+115, 0, -115, 160));
 
-  character_sprite->move(-0.2, 0);
+  character_sprite->move(-0.1, 0);
 }
 
 
 void Animations::hero_right_animation()
 {
-  *CurrentFrame += 1;
+  frame_update();
 
   if (*CurrentFrame > 384)
     *CurrentFrame -= 385;
 
   if (*CurrentFrame == 128)
-    character_sprite->setTextureRect(IntRect(128, 3, 115, 160));
+    character_sprite->setTextureRect(IntRect(128, 0, 115, 160));
 
   if (*CurrentFrame == 256)
-    character_sprite->setTextureRect(IntRect(300, 3, 115, 160));
+    character_sprite->setTextureRect(IntRect(275, 0, 115, 160));
 
   if (*CurrentFrame == 384)
-    character_sprite->setTextureRect(IntRect(10, 3, 115, 160));
+    character_sprite->setTextureRect(IntRect(10, 0, 115, 160));
 
-  character_sprite->move(0.2, 0);
+  character_sprite->move(0.1, 0);
 }
 
 
 void Animations::hero_up_animation()
 {
-  *CurrentFrame += 1;
+  frame_update();
 
   if (*CurrentFrame > 384)
     *CurrentFrame -= 385;
@@ -57,13 +78,13 @@ void Animations::hero_up_animation()
   if (*CurrentFrame == 384)
     character_sprite->setTextureRect(IntRect(10, 330, 115, 160));
 
-  character_sprite->move(0, -0.2);
+  character_sprite->move(0, -0.1);
 }
 
 
 void Animations::hero_down_animation()
 {
-  *CurrentFrame += 1;
+  frame_update();
 
   if (*CurrentFrame > 384)
     *CurrentFrame -= 385;
@@ -77,5 +98,5 @@ void Animations::hero_down_animation()
   if (*CurrentFrame == 384)
     character_sprite->setTextureRect(IntRect(10, 165, 115, 160));
 
-  character_sprite->move(0, 0.2);
+  character_sprite->move(0, 0.1);
 }

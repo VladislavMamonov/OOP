@@ -32,8 +32,7 @@ protected:
 	Texture *character_texture;
 	Sprite *character_sprite;
 	Sprite *gameBg;
-	Clock *clock;
-	int *CurrentFrame = new int;
+	float *CurrentFrame = new float;
 };
 
 
@@ -44,13 +43,16 @@ protected:
 	void hero_right_animation();
 	void hero_up_animation();
 	void hero_down_animation();
+
+private:
+	void frame_update();
 };
 
 
 class GameInit : public Animations
 {
 protected:
-  void load_game(int *ResolutionOption);
+  void load_game();
 
 private:
 		void game_proccess();

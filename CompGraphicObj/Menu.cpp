@@ -149,7 +149,7 @@ Menu::Menu()
 		if (Mouse::isButtonPressed(Mouse::Left))
 		{
 			if (menuNum == 1) {
-				load_game(ResolutionOption);
+				load_game();
 				while (!Keyboard::isKeyPressed(Keyboard::Escape));
 			}
 

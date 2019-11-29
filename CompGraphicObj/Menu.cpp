@@ -9,7 +9,6 @@ void Menu::load_objects()
 	menuTexture1 = new Texture;
 	menuTexture2 = new Texture;
 	menuTexture3 = new Texture;
-	aboutTexture = new Texture;
 	menuBackground = new Texture;
 
 	menuTexture1->loadFromFile("images/1.png");

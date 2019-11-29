@@ -22,7 +22,7 @@ class GUI_Objects : public WindowInit
 protected:
 	virtual void load_objects() = 0;
 
-	Texture *menuTexture1, *menuTexture2, *menuTexture3, *aboutTexture, *menuBackground;
+	Texture *menuTexture1, *menuTexture2, *menuTexture3, *menuBackground;
 	Sprite *menu1, *menu2, *menu3, *about, *menuBg;
 	Text *Resolution, *ResolutionParametr1, *ResolutionParametr2, *ResolutionParametr3;
 	Font *font;
@@ -64,38 +64,10 @@ private:
 
 class Menu : public GameInit
 {
-protected:
+public:
     Menu();
 
 private:
     void settings();
 		void load_objects() override;
-};
-
-
-class GUI : public Menu
-{
-public:
-	GUI()
-	{
-		while (MenuWindow->isOpen()) {
-			Event event;
-			while (MenuWindow->pollEvent(event))
-			{
-				if (event.type == Event::Closed)
-					MenuWindow->close();
-			}
-			MenuWindow->display();
-		}
-
-		while (GameWindow->isOpen()) {
-			Event event;
-			while (GameWindow->pollEvent(event))
-			{
-				if (event.type == Event::Closed)
-					GameWindow->close();
-			}
-			GameWindow->display();
-		}
-	}
 };

@@ -24,8 +24,6 @@ void Animations::hero_left_animation()
 {
   frame_update();
 
-  cout << *CurrentFrame << endl;
-
   if (*CurrentFrame > 384)
     *CurrentFrame -= 384;
 

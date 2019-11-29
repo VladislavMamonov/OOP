@@ -23,7 +23,7 @@ protected:
 	virtual void load_objects() = 0;
 
 	Texture *menuTexture1, *menuTexture2, *menuTexture3, *menuBackground;
-	Sprite *menu1, *menu2, *menu3, *about, *menuBg;
+	Sprite *menu1, *menu2, *menu3, *menuBg;
 	Text *Resolution, *ResolutionParametr1, *ResolutionParametr2, *ResolutionParametr3;
 	Font *font;
 	int *ResolutionOption = new int();

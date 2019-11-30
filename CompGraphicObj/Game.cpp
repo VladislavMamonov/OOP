@@ -117,4 +117,14 @@ void GameInit::game_proccess()
     game_draw();
   }
   GameWindow->close();
+  GameInit::delete_objects();
+}
+
+
+void GameInit::delete_objects()
+{
+  delete gameBackground;
+  delete character_texture;
+  delete gameBg;
+  delete character_sprite;
 }

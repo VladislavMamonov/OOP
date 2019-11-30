@@ -171,3 +171,24 @@ Menu::Menu()
 		MenuWindow->display();
 	}
 }
+
+
+void Menu::delete_objects()
+{
+	delete menuTexture1;
+	delete menuTexture2;
+	delete menuTexture3;
+	delete menuBackground;
+
+	delete menu1;
+	delete menu2;
+	delete menu3;
+	delete menuBg;
+
+	delete font;
+
+	delete Resolution;
+	delete ResolutionParametr1;
+	delete ResolutionParametr2;
+	delete ResolutionParametr3;
+}

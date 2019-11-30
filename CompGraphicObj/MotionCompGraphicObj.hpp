@@ -21,6 +21,7 @@ class GUI_Objects : public WindowInit
 {
 protected:
 	virtual void load_objects() = 0;
+	virtual void delete_objects() = 0;
 
 	Texture *menuTexture1, *menuTexture2, *menuTexture3, *menuBackground;
 	Sprite *menu1, *menu2, *menu3, *menuBg;
@@ -57,6 +58,7 @@ protected:
 private:
 		void game_proccess();
 		void load_objects() override;
+		void delete_objects() override;
 		void map_border_check();
 		void game_draw();
 };
@@ -66,8 +68,12 @@ class Menu : public GameInit
 {
 public:
     Menu();
+		~Menu() {
+			delete_objects();
+		}
 
 private:
     void settings();
 		void load_objects() override;
+		void delete_objects() override;
 };

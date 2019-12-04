@@ -26,18 +26,31 @@ protected:
 	Texture *menuTexture1, *menuTexture2, *menuTexture3, *menuBackground;
 	Sprite *menu1, *menu2, *menu3, *menuBg;
 	Text *Resolution, *ResolutionParametr1, *ResolutionParametr2, *ResolutionParametr3;
+	Text *ScoreInfo;
 	Font *font;
-	int *ResolutionOption = new int();
+	int *ResolutionOption = new int;
 
-	Texture *gameBackground;
-	Texture *character_texture;
-	Sprite *character_sprite;
-	Sprite *gameBg;
+	Texture *gameBackground, *collection_texture;
+	Texture *character_texture, *barrier_texture;
+	Sprite *character_sprite, *collection_sprite, *gameBg;
+	Sprite *barrier_sprite1, *barrier_sprite2, *barrier_sprite3;
+	Sprite *barrier_sprite4, *barrier_sprite5, *barrier_sprite6;
+
 	float *CurrentFrame = new float;
+	int *PlayerScore = new int;
 };
 
 
-class Animations : public GUI_Objects
+class Objects_Interaction : public GUI_Objects
+{
+protected:
+	void object_set_position(Sprite *sprite);
+	void collection_pick();
+	int collision_handling();
+};
+
+
+class Animations : public Objects_Interaction
 {
 protected:
 	void hero_left_animation();

@@ -1,7 +1,6 @@
 #include "MotionCompGraphicObj.hpp"
-#include <iostream>
+#include <ctime>
 
-using namespace std;
 
 void GameInit::load_game()
 {
@@ -31,13 +30,26 @@ void GameInit::load_game()
 void GameInit::load_objects()
 {
   gameBackground = new Texture;
+  collection_texture = new Texture();
   character_texture = new Texture;
+  barrier_texture = new Texture();
 
   gameBackground->loadFromFile("images/Background_Game.jpg");
+  collection_texture->loadFromFile("images/collection.png");
   character_texture->loadFromFile("images/character.png");
+  barrier_texture->loadFromFile("images/barrier.png");
 
   gameBg = new Sprite(*gameBackground);
+  collection_sprite = new Sprite(*collection_texture);
   character_sprite = new Sprite(*character_texture);
+  barrier_sprite1 = new Sprite(*barrier_texture);
+  barrier_sprite2 = new Sprite(*barrier_texture);
+  barrier_sprite3 = new Sprite(*barrier_texture);
+  barrier_sprite4 = new Sprite(*barrier_texture);
+  barrier_sprite5 = new Sprite(*barrier_texture);
+  barrier_sprite6 = new Sprite(*barrier_texture);
+
+  ScoreInfo = new Text(L"Собрано ракушек: 0", *font, 40);
 }
 
 
@@ -67,15 +79,32 @@ void GameInit::game_draw()
 {
   GameWindow->draw(*gameBg);
   GameWindow->draw(*character_sprite);
+  GameWindow->draw(*ScoreInfo);
+  GameWindow->draw(*collection_sprite);
+  GameWindow->draw(*barrier_sprite1);
+  GameWindow->draw(*barrier_sprite2);
+  GameWindow->draw(*barrier_sprite3);
+  GameWindow->draw(*barrier_sprite4);
+  GameWindow->draw(*barrier_sprite5);
+  GameWindow->draw(*barrier_sprite6);
+
   GameWindow->display();
 }
 
 
 void GameInit::game_proccess()
 {
-  GameInit::load_objects();
+  srand(time(NULL));
 
-  character_sprite->setPosition(GameWindow->getSize().x/2.25, GameWindow->getSize().y/2.7);
+  GameInit::load_objects();
+  object_set_position(barrier_sprite1);
+  object_set_position(barrier_sprite2);
+  object_set_position(barrier_sprite3);
+  object_set_position(barrier_sprite4);
+  object_set_position(barrier_sprite5);
+  object_set_position(barrier_sprite6);
+
+  *PlayerScore = 0;
 
   while (!Keyboard::isKeyPressed(Keyboard::Escape))
   {
@@ -93,24 +122,28 @@ void GameInit::game_proccess()
 
     while (Keyboard::isKeyPressed(Keyboard::Left) || Keyboard::isKeyPressed(Keyboard::A)) {
       hero_left_animation();
+      collection_pick();
       map_border_check();
       game_draw();
     }
 
     while (Keyboard::isKeyPressed(Keyboard::Right) || Keyboard::isKeyPressed(Keyboard::D)) {
       hero_right_animation();
+      collection_pick();
       map_border_check();
       game_draw();
     }
 
     while (Keyboard::isKeyPressed(Keyboard::Up) || Keyboard::isKeyPressed(Keyboard::W)) {
       hero_up_animation();
+      collection_pick();
       map_border_check();
       game_draw();
     }
 
     while (Keyboard::isKeyPressed(Keyboard::Down) || Keyboard::isKeyPressed(Keyboard::S)) {
       hero_down_animation();
+      collection_pick();
       map_border_check();
       game_draw();
     }
@@ -124,7 +157,18 @@ void GameInit::game_proccess()
 void GameInit::delete_objects()
 {
   delete gameBackground;
+  delete collection_texture;
   delete character_texture;
-  delete gameBg;
+  delete barrier_texture;
+
   delete character_sprite;
+  delete collection_sprite;
+  delete gameBg;
+
+  delete barrier_sprite1;
+  delete barrier_sprite2;
+  delete barrier_sprite3;
+  delete barrier_sprite4;
+  delete barrier_sprite5;
+  delete barrier_sprite6;
 }

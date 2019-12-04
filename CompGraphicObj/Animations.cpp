@@ -1,7 +1,4 @@
 #include "MotionCompGraphicObj.hpp"
-#include <iostream>
-
-using namespace std;
 
 
 void Animations::frame_update()
@@ -36,7 +33,11 @@ void Animations::hero_left_animation()
   if (*CurrentFrame == 384)
     character_sprite->setTextureRect(IntRect(10+115, 0, -115, 160));
 
-  character_sprite->move(-0.1, 0);
+
+  if (collision_handling() == 0)
+    character_sprite->move(-0.1, 0);
+  else
+    character_sprite->move(2, 0);
 }
 
 
@@ -56,7 +57,10 @@ void Animations::hero_right_animation()
   if (*CurrentFrame == 384)
     character_sprite->setTextureRect(IntRect(10, 0, 115, 160));
 
-  character_sprite->move(0.1, 0);
+  if (collision_handling() == 0)
+    character_sprite->move(0.1, 0);
+  else
+    character_sprite->move(-2, 0);
 }
 
 
@@ -76,7 +80,10 @@ void Animations::hero_up_animation()
   if (*CurrentFrame == 384)
     character_sprite->setTextureRect(IntRect(10, 330, 115, 160));
 
-  character_sprite->move(0, -0.1);
+  if (collision_handling() == 0)
+    character_sprite->move(0, -0.1);
+  else
+    character_sprite->move(0, 2);
 }
 
 
@@ -96,5 +103,8 @@ void Animations::hero_down_animation()
   if (*CurrentFrame == 384)
     character_sprite->setTextureRect(IntRect(10, 165, 115, 160));
 
-  character_sprite->move(0, 0.1);
+  if (collision_handling() == 0)
+    character_sprite->move(0, 0.1);
+  else
+    character_sprite->move(0, -2);
 }

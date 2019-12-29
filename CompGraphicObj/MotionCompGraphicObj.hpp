@@ -47,6 +47,9 @@ protected:
 	void object_set_position(Sprite *sprite);
 	void collection_pick();
 	int collision_handling();
+
+private:
+	void collection_spawn();
 };
 
 

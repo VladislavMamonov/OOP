@@ -25,12 +25,27 @@ void Objects_Interaction::object_set_position(Sprite *sprite)
 }
 
 
+void Objects_Interaction::collection_spawn()
+{
+  collection_sprite->setPosition(rand() % (GameWindow->getSize().x - 150),
+   rand() % (GameWindow->getSize().y - 150));
+
+  if (collection_sprite->getGlobalBounds().intersects(barrier_sprite1->getGlobalBounds())
+   || collection_sprite->getGlobalBounds().intersects(barrier_sprite2->getGlobalBounds())
+   || collection_sprite->getGlobalBounds().intersects(barrier_sprite3->getGlobalBounds())
+   || collection_sprite->getGlobalBounds().intersects(barrier_sprite4->getGlobalBounds())
+   || collection_sprite->getGlobalBounds().intersects(barrier_sprite5->getGlobalBounds())
+   || collection_sprite->getGlobalBounds().intersects(barrier_sprite6->getGlobalBounds())) {
+     collection_spawn();
+  }
+}
+
+
 void Objects_Interaction::collection_pick()
 {
   if (character_sprite->getGlobalBounds().intersects(collection_sprite->getGlobalBounds())) {
     *PlayerScore += 1;
-    collection_sprite->setPosition(rand() % (GameWindow->getSize().x - 150),
-     rand() % (GameWindow->getSize().y - 150));
+    collection_spawn();
   }
   ostringstream PlayerScoreStr;
   PlayerScoreStr << *PlayerScore;

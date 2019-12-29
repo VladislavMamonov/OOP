@@ -36,8 +36,12 @@ void Animations::hero_left_animation()
 
   if (collision_handling() == 0)
     character_sprite->move(-0.1, 0);
-  else
-    character_sprite->move(2, 0);
+  else {
+    while (Keyboard::isKeyPressed(Keyboard::Left) || Keyboard::isKeyPressed(Keyboard::A)) {
+      character_sprite->move(0, 0);
+    }
+    character_sprite->move(1, 0);
+  }
 }
 
 
@@ -59,8 +63,12 @@ void Animations::hero_right_animation()
 
   if (collision_handling() == 0)
     character_sprite->move(0.1, 0);
-  else
-    character_sprite->move(-2, 0);
+  else {
+    while (Keyboard::isKeyPressed(Keyboard::Right) || Keyboard::isKeyPressed(Keyboard::D)) {
+      character_sprite->move(0, 0);
+    }
+    character_sprite->move(-1, 0);
+  }
 }
 
 
@@ -82,8 +90,12 @@ void Animations::hero_up_animation()
 
   if (collision_handling() == 0)
     character_sprite->move(0, -0.1);
-  else
-    character_sprite->move(0, 2);
+  else {
+    while (Keyboard::isKeyPressed(Keyboard::Up) || Keyboard::isKeyPressed(Keyboard::W)) {
+      character_sprite->move(0, 0);
+    }
+    character_sprite->move(0, 1);
+  }
 }
 
 
@@ -105,6 +117,10 @@ void Animations::hero_down_animation()
 
   if (collision_handling() == 0)
     character_sprite->move(0, 0.1);
-  else
-    character_sprite->move(0, -2);
+  else {
+    while (Keyboard::isKeyPressed(Keyboard::Down) || Keyboard::isKeyPressed(Keyboard::S)) {
+      character_sprite->move(0, 0);
+    }
+    character_sprite->move(0, -1);
+  }
 }
